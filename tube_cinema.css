@@ -1,0 +1,174 @@
+/* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2d2d2d;
+      color: #fff;
+    }
+
+
+    /* Navbar */
+    header {
+      background-color: #1c1c1c;
+      padding: 15px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* Logo */
+    .logo {
+      background-color: #1c1c1c;
+      color: #e7b11c;
+      width: 40%;
+      height: 30px;
+      text-align: start;
+    }
+
+    .logo a{
+      display: inline-block;
+      color: #e7b11c;
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      padding-bottom: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      
+    }
+
+    nav ul li a:hover {
+      color: #ddd66e;
+    }
+
+    /* Search */
+
+
+    /* Movie grid */
+    .movies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 25px;
+      padding: 30px;
+    }
+
+    .movie {
+      text-align: center;
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .movie img {
+      display: inline-block;
+      width: 100%;
+      border-radius: 5px;
+      /* height: 270px; */
+      object-fit: cover;
+    }
+
+    .movie h3 {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #e0e0e0;
+    }
+
+    /* Hover CSS */
+
+    .movie:hover {
+      transform: scale(1.05);
+    }
+
+  /* Mobile Advertisement CSS { মোবাইল বিজ্ঞাপন CSS } */
+
+    /* .mobile{
+      width: 100%;
+      text-align: center;
+    }
+
+    .mobile img{
+      max-width: 80%;
+    } */
+
+
+  /* ================= RESPONSIVE ================= */
+
+  @media (max-width: 992px) {
+
+    header {
+      background-color: #1c1c1c;
+      padding: 15px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    /* Logo */
+    .logo {
+      background-color: #1c1c1c;
+      color: #e7b11c;
+      width: 100%;
+      height: 25px;
+      text-align: center;
+    }
+
+    .logo a{
+      display: inline-block;
+      color: #e7b11c;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      padding-bottom: 10px;
+    }
+
+    /* Navbar */
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: normal;
+      font-size: 15px;
+      
+    }
+
+  }
+
+  @media (max-width: 445px){
+    
+    /* Movie grid */
+    .movies {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      padding: 15px;
+    }
+
+    .movie h3 {
+      font-size: 12px;
+    }
+    
+  }
+
+  /* Mobile Advertisement CSS { মোবাইল বিজ্ঞাপন CSS } */
+
+
