@@ -99,14 +99,16 @@
 
   /* Mobile Advertisement CSS { মোবাইল বিজ্ঞাপন CSS } */
 
-    /* .mobile{
+    .mobile{
       width: 100%;
       text-align: center;
     }
 
     .mobile img{
-      max-width: 80%;
-    } */
+      max-width: 150px;
+      padding: 10px;
+      
+    }
 
 
   /* ================= RESPONSIVE ================= */
