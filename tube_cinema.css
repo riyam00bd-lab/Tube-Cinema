@@ -85,16 +85,26 @@
       object-fit: cover;
     }
 
-    .movie h3 {
+    .movie a h3 {
       margin-top: 10px;
       font-size: 14px;
-      color: #e0e0e0;
+      color: #ffffff;
+      /* word-spacing: 10px; */
+      
+    }
+    
+    .movie a{
+      text-decoration: none;
     }
 
     /* Hover CSS */
 
     .movie:hover {
       transform: scale(1.05);
+    }
+
+    .movie a h3:hover {
+      color: #ddd66e;
     }
 
   /* Mobile Advertisement CSS { মোবাইল বিজ্ঞাপন CSS } */
@@ -105,7 +115,7 @@
     }
 
     .mobile img{
-      max-width: 150px;
+      max-width: 170px;
       padding: 10px;
       
     }
