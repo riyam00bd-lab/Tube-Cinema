@@ -85,14 +85,14 @@
       object-fit: cover;
     }
 
-    .movie a h3 {
+    .movie a p {
       margin-top: 10px;
-      font-size: 14px;
+      font-size: 16px;
       color: #ffffff;
       /* word-spacing: 10px; */
       
     }
-    
+
     .movie a{
       text-decoration: none;
     }
@@ -103,7 +103,7 @@
       transform: scale(1.05);
     }
 
-    .movie a h3:hover {
+    .movie a p:hover {
       color: #ddd66e;
     }
 
@@ -175,8 +175,8 @@
       padding: 15px;
     }
 
-    .movie h3 {
-      font-size: 12px;
+    .movie p {
+      font-size: 13px;
     }
     
   }
