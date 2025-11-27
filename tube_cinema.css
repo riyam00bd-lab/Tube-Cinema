@@ -97,6 +97,19 @@
       text-decoration: none;
     }
 
+    button {
+      max-width: 100%;
+      margin: 15px 5px 10px 5px;
+      padding: 8px 12px;
+      background-color: #e7b11c;
+      border: none;
+      border-radius: 4px;
+      color: #1c1c1c;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
     /* Hover CSS */
 
     .movie:hover {
@@ -166,7 +179,7 @@
 
   }
 
-  @media (max-width: 445px){
+  @media (max-width: 450px){
     
     /* Movie grid */
     .movies {
@@ -177,6 +190,11 @@
 
     .movie p {
       font-size: 13px;
+    }
+
+    button{
+      padding: 6px 10px;
+      font-size: 12px;
     }
     
   }
