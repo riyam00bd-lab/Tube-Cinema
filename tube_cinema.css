@@ -63,6 +63,21 @@
     /* Search */
 
 
+    /* Hidden Add */
+
+    .hidenAdd {
+      width: 100%;
+      height: 2500px;
+      background: #000000;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+
+
     /* Movie grid */
     .movies {
       display: grid;
@@ -74,7 +89,7 @@
     .movie {
       text-align: center;
       transition: transform 0.2s;
-      position: relative;
+      /* position: relative; */
     }
 
     .movie img {
