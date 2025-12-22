@@ -20,9 +20,9 @@
       flex-wrap: wrap;
       justify-content: start;
       align-items: center;
-      position: sticky;
+      /* position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 1000; */
     }
 
     /* Logo */
@@ -67,7 +67,7 @@
 
     .hidenAdd {
       width: 100%;
-      height: 2500px;
+      height: 10000px;
       background: #000000;
       text-align: center;
       position: absolute;
@@ -160,9 +160,9 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      position: sticky;
+      /* position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 1000; */
     }
     
     /* Logo */
