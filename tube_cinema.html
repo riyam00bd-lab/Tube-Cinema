@@ -1,314 +1,1122 @@
-<!DOCTYPE html>
-<html lang="en">
+
+html_content = '''<!DOCTYPE html>
+<html lang="bn">
 <head>
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title> Movies </title>
-  
-  <link rel="stylesheet" href="./tube_cinema.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 আমার আয়-ব্যয় হিসাব</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 1.1rem; }
+        .header-actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-white { background: white; color: var(--primary); }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn-outline { background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); }
+        .btn-outline:hover { background: rgba(255,255,255,0.3); }
+        
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .kpi-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .kpi-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        .kpi-income::before { background: var(--success); }
+        .kpi-expense::before { background: var(--danger); }
+        .kpi-balance::before { background: var(--info); }
+        .kpi-savings::before { background: var(--warning); }
+        
+        .kpi-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        .kpi-income .kpi-icon { background: #d1fae5; color: var(--success); }
+        .kpi-expense .kpi-icon { background: #fee2e2; color: var(--danger); }
+        .kpi-balance .kpi-icon { background: #dbeafe; color: var(--info); }
+        .kpi-savings .kpi-icon { background: #fef3c7; color: var(--warning); }
+        
+        .kpi-label { font-size: 0.9rem; color: var(--text-light); font-weight: 500; margin-bottom: 5px; }
+        .kpi-value { font-size: 1.8rem; font-weight: 700; color: var(--text); }
+        .kpi-change {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .kpi-change.positive { color: var(--success); }
+        .kpi-change.negative { color: var(--danger); }
+        
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .chart-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; }
+        .filter-group label { font-size: 0.85rem; color: var(--text-light); font-weight: 500; }
+        .filter-group input, .filter-group select {
+            padding: 10px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+            min-width: 150px;
+        }
+        .filter-group input:focus, .filter-group select:focus { border-color: var(--primary); }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+        }
+        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); }
+        .btn-danger { background: var(--danger); color: white; align-self: flex-end; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { background: var(--success); color: white; align-self: flex-end; }
+        .btn-success:hover { background: #059669; }
+        
+        /* Table */
+        .table-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .table-title { font-size: 1.2rem; font-weight: 600; }
+        .table-count { font-size: 0.9rem; color: var(--text-light); background: var(--bg); padding: 5px 12px; border-radius: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 16px; text-align: left; }
+        th {
+            background: var(--bg);
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+        }
+        tr { border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        tr:hover { background: #f8fafc; }
+        tr:last-child { border-bottom: none; }
+        .type-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .type-income { background: #d1fae5; color: #065f46; }
+        .type-expense { background: #fee2e2; color: #991b1b; }
+        .amount-income { color: var(--success); font-weight: 700; }
+        .amount-expense { color: var(--danger); font-weight: 700; }
+        .actions { display: flex; gap: 8px; }
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+        .action-btn:hover { transform: scale(1.1); }
+        .edit-btn { background: #dbeafe; color: var(--info); }
+        .delete-btn { background: #fee2e2; color: var(--danger); }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlide 0.3s ease;
+        }
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .modal-title { font-size: 1.3rem; font-weight: 700; }
+        .modal-close {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            border: none;
+            background: var(--bg);
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            transition: all 0.2s;
+        }
+        .modal-close:hover { background: var(--border); color: var(--text); }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.95rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px; }
+        .btn-secondary { background: var(--bg); color: var(--text); }
+        .btn-secondary:hover { background: var(--border); }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        .empty-state i { font-size: 4rem; margin-bottom: 20px; opacity: 0.5; }
+        .empty-state h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text); }
+        
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: var(--card);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: toastSlide 0.3s ease;
+            border-left: 4px solid var(--success);
+            min-width: 300px;
+        }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.info { border-left-color: var(--info); }
+        @keyframes toastSlide {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6rem; }
+            .kpi-value { font-size: 1.4rem; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-group input, .filter-group select { width: 100%; }
+        }
+        
+        /* Summary Bar */
+        .summary-bar {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            text-align: center;
+        }
+        .summary-item h4 { font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px; }
+        .summary-item p { font-size: 1.3rem; font-weight: 700; }
+        
+        /* Category Tags */
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💰 আমার আয়-ব্যয় হিসাব</h1>
+            <p>আপনার দৈনন্দিন আয় ও ব্যয়ের সম্পূর্ণ হিসাব রাখুন</p>
+            <div class="header-actions">
+                <button class="btn btn-white" onclick="openModal()">
+                    <i class="fas fa-plus"></i> নতুন লেনদেন
+                </button>
+                <button class="btn btn-outline" onclick="exportToCSV()">
+                    <i class="fas fa-download"></i> CSV ডাউনলোড
+                </button>
+                <button class="btn btn-outline" onclick="document.getElementById('csvInput').click()">
+                    <i class="fas fa-upload"></i> CSV আপলোড
+                </button>
+                <input type="file" id="csvInput" accept=".csv" style="display:none" onchange="importFromCSV(event)">
+            </div>
+        </div>
+        
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card kpi-income">
+                <div class="kpi-icon"><i class="fas fa-arrow-down"></i></div>
+                <div class="kpi-label">মোট আয়</div>
+                <div class="kpi-value" id="totalIncome">৳০.০০</div>
+                <div class="kpi-change positive" id="incomeChange">
+                    <i class="fas fa-chart-line"></i> এই মাসে
+                </div>
+            </div>
+            <div class="kpi-card kpi-expense">
+                <div class="kpi-icon"><i class="fas fa-arrow-up"></i></div>
+                <div class="kpi-label">মোট ব্যয়</div>
+                <div class="kpi-value" id="totalExpense">৳০.০০</div>
+                <div class="kpi-change negative" id="expenseChange">
+                    <i class="fas fa-chart-line"></i> এই মাসে
+                </div>
+            </div>
+            <div class="kpi-card kpi-balance">
+                <div class="kpi-icon"><i class="fas fa-wallet"></i></div>
+                <div class="kpi-label">বর্তমান ব্যালেন্স</div>
+                <div class="kpi-value" id="balance">৳০.০০</div>
+                <div class="kpi-change positive" id="balanceStatus">
+                    <i class="fas fa-check-circle"></i> সুস্থ অবস্থা
+                </div>
+            </div>
+            <div class="kpi-card kpi-savings">
+                <div class="kpi-icon"><i class="fas fa-piggy-bank"></i></div>
+                <div class="kpi-label">সঞ্চয়ের হার</div>
+                <div class="kpi-value" id="savingsRate">০%</div>
+                <div class="kpi-change" id="savingsStatus">
+                    <i class="fas fa-info-circle"></i> আয়ের শতাংশ
+                </div>
+            </div>
+        </div>
+        
+        <!-- Summary Bar -->
+        <div class="summary-bar">
+            <div class="summary-item">
+                <h4>এই মাসের আয়</h4>
+                <p id="monthIncome">৳০.০০</p>
+            </div>
+            <div class="summary-item">
+                <h4>এই মাসের ব্যয়</h4>
+                <p id="monthExpense">৳০.০০</p>
+            </div>
+            <div class="summary-item">
+                <h4>এই মাসের সঞ্চয়</h4>
+                <p id="monthSavings">৳০.০০</p>
+            </div>
+            <div class="summary-item">
+                <h4>মোট লেনদেন</h4>
+                <p id="totalTransactions">০</p>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-title"><i class="fas fa-chart-pie" style="color: var(--primary);"></i> খাত অনুযায়ী ব্যয়</div>
+                <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><i class="fas fa-chart-bar" style="color: var(--success);"></i> মাসিক আয় vs ব্যয়</div>
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label>তারিখ থেকে</label>
+                <input type="date" id="filterFrom">
+            </div>
+            <div class="filter-group">
+                <label>তারিখ পর্যন্ত</label>
+                <input type="date" id="filterTo">
+            </div>
+            <div class="filter-group">
+                <label>ধরন</label>
+                <select id="filterType">
+                    <option value="">সব</option>
+                    <option value="income">আয়</option>
+                    <option value="expense">ব্যয়</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>খাত</label>
+                <select id="filterCategory">
+                    <option value="">সব খাত</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="applyFilters()">
+                <i class="fas fa-filter"></i> ফিল্টার
+            </button>
+            <button class="btn btn-secondary" onclick="resetFilters()">
+                <i class="fas fa-undo"></i> রিসেট
+            </button>
+        </div>
+        
+        <!-- Data Table -->
+        <div class="table-card">
+            <div class="table-header">
+                <div>
+                    <div class="table-title">📋 লেনদেনের তালিকা</div>
+                </div>
+                <div class="table-count" id="recordCount">০টি রেকর্ড</div>
+            </div>
+            <div id="tableContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>খাত</th>
+                            <th>বিবরণ</th>
+                            <th>ধরন</th>
+                            <th>পরিমাণ</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionTable">
+                        <!-- Dynamic rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     
-  <header>
-
-    <!-- Logo {Tube Cinema}  -->
-    <div class="logo"> 
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d"> Tube Cinema </a> 
-    </div>
-  
-    <!-- Navbar -->
-    <nav>
-      <ul>
-        <li><a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">Movies</a></li>
-        <li><a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">Anime</a></li>
-        <li><a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">Trending</a></li>
-      </ul>
-    </nav>
-
-  </header>
-
-  <!-- Hiden Add  -->
-
-      <a class="hidenAdd" href="https://engagementidentifiers.com/y18qgf61?key=8e41af7fb2f213ebdda658bd16b91faf">
-        <h1> Hiden Add </h1>
-      </a>
-
-
-  <!-- Movie Grid  (01 - 06) -->
-  <section class="movies">
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/gDVgC9jd917NdAcqBdRRDUYi4Tq.jpg" alt="Movie 01">
-
-        <p>Avatar: Fire and Ash (2025)</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/A8eroxSQlIEaYDK119qJNZ8ucpQ.jpg" alt="Movie 02">
-
-        <p>Dhurandhar (2025)</p>
-        
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/jo9efbQSGDZNQ6xMocyD1prFjdF.jpg" alt="Movie 03">
-
-        <p>Akhanda 2 (2025)</p>
-        
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/liP0uEW3WNmDroCycCLNgEkHJcV.jpg" alt="Movie 04">
-
-        <p>Mass Jathara (2025)</p>
-        
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/uhPYs2syfbNG8O0elrrdLtuaD4a.jpg" alt="Movie 05">
-
-        <p>The Fantastic 4: First Steps</p>
-        
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/bjUWGw0Ao0qVWxagN3VCwBJHVo6.jpg" alt="Movie 06">
-
-        <p>Zootopia 2</p>
-        
-        <button> Download </button>
-      </a>
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">নতুন লেনদেন যোগ করুন</div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="transactionForm" onsubmit="saveTransaction(event)">
+                <input type="hidden" id="editId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>তারিখ *</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ধরন *</label>
+                        <select id="type" required onchange="updateCategories()">
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="income">আয়</option>
+                            <option value="expense">ব্যয়</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>খাত *</label>
+                        <select id="category" required>
+                            <option value="">প্রথমে ধরন নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>পরিমাণ (৳) *</label>
+                        <input type="number" id="amount" min="0" step="0.01" required placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>বিবরণ</label>
+                    <textarea id="description" placeholder="লেনদেনের বিবরণ লিখুন..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">বাতিল</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> সংরক্ষণ করুন
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     
-  </section>
-
-  <!-- Movie Grid  (07 - 12) -->
-  <section class="movies">
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/fkTeziNtc0uwE899uI1hlMOEdZL.jpg" alt="Movie 07">
-
-        <p>Secret Superstar</p>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <script>
+        // Categories
+        const categories = {
+            income: ['বেতন', 'ব্যবসা', 'ফ্রিল্যান্সিং', 'বিনিয়োগ', 'অন্যান্য আয়'],
+            expense: ['খাদ্য', 'বাসা ভাড়া', 'পরিবহন', 'শিক্ষা', 'চিকিৎসা', 'বিদ্যুৎ', 'ইন্টারনেট', 'কেনাকাটা', 'বিনোদন', 'অন্যান্য ব্যয়']
+        };
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/qm6tWIE0rkwNLppHmypJpj7c14x.jpg" alt="Movie 08">
-
-        <p>Snow White</p>
+        // State
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        let categoryChart = null;
+        let monthlyChart = null;
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/bJY5wgWJSRNvUd5ENORSLXf7KSZ.jpg" alt="Movie 09">
-
-        <p>She Rides Shotgun</p>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to today
+            document.getElementById('date').valueAsDate = new Date();
+            
+            // Load data
+            if (transactions.length === 0) {
+                // Add sample data
+                addSampleData();
+            }
+            
+            updateCategoryFilter();
+            renderAll();
+        });
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/h4LMWjDgzLWaakq9rB3fjq8HNuC.jpg" alt="Movie 10">
-
-        <p>HIT: The Third Case</p>
+        function addSampleData() {
+            const sampleData = [
+                { id: Date.now() - 100000, date: '2026-06-01', type: 'income', category: 'বেতন', amount: 50000, description: 'জুন মাসের বেতন' },
+                { id: Date.now() - 90000, date: '2026-06-05', type: 'expense', category: 'বাসা ভাড়া', amount: 15000, description: 'জুন মাসের ভাড়া' },
+                { id: Date.now() - 80000, date: '2026-06-07', type: 'expense', category: 'খাদ্য', amount: 3500, description: 'মাসিক বাজার' },
+                { id: Date.now() - 70000, date: '2026-06-10', type: 'expense', category: 'পরিবহন', amount: 2000, description: 'বাস ভাড়া' },
+                { id: Date.now() - 60000, date: '2026-06-15', type: 'income', category: 'ফ্রিল্যান্সিং', amount: 15000, description: 'ওয়েব ডিজাইন প্রজেক্ট' },
+                { id: Date.now() - 50000, date: '2026-06-18', type: 'expense', category: 'ইন্টারনেট', amount: 1200, description: 'ওয়াইফাই বিল' },
+                { id: Date.now() - 40000, date: '2026-06-20', type: 'expense', category: 'শিক্ষা', amount: 5000, description: 'কোর্স ফি' },
+                { id: Date.now() - 30000, date: '2026-06-25', type: 'expense', category: 'কেনাকাটা', amount: 3000, description: 'নতুন জুতো' },
+                { id: Date.now() - 20000, date: '2026-07-01', type: 'income', category: 'বেতন', amount: 50000, description: 'জুলাই মাসের বেতন' },
+                { id: Date.now() - 10000, date: '2026-07-03', type: 'expense', category: 'খাদ্য', amount: 2500, description: 'সাপ্তাহিক বাজার' }
+            ];
+            transactions = sampleData;
+            saveToStorage();
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oTKZ1ldByphFvSo1fCBu63D5ZGj.jpg" alt="Movie 11">
-
-        <p>Coolie (2025)</p>
+        function updateCategories() {
+            const type = document.getElementById('type').value;
+            const categorySelect = document.getElementById('category');
+            categorySelect.innerHTML = '<option value="">নির্বাচন করুন</option>';
+            
+            if (type && categories[type]) {
+                categories[type].forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    option.textContent = cat;
+                    categorySelect.appendChild(option);
+                });
+            }
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/1QswfxgPNGcJBaUemuD30DZ3gfK.jpg" alt="Movie 12">
-
-        <p>Son of Sardaar 2</p>
+        function updateCategoryFilter() {
+            const filterCategory = document.getElementById('filterCategory');
+            const allCats = [...categories.income, ...categories.expense];
+            const uniqueCats = [...new Set(allCats)];
+            
+            filterCategory.innerHTML = '<option value="">সব খাত</option>';
+            uniqueCats.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                filterCategory.appendChild(option);
+            });
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-  </section>
-
-  <!-- Movie Grid  (13 - 18) -->
-  <section class="movies">
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/nUarUxPwzfdEyqw5d6pHLgsyTRB.jpg" alt="Movie 13">
-
-        <p>Robin Hood</p>
+        function openModal(id = null) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('transactionForm');
+            
+            if (id) {
+                const t = transactions.find(x => x.id === id);
+                if (t) {
+                    title.textContent = 'লেনদেন সম্পাদনা করুন';
+                    document.getElementById('editId').value = t.id;
+                    document.getElementById('date').value = t.date;
+                    document.getElementById('type').value = t.type;
+                    updateCategories();
+                    document.getElementById('category').value = t.category;
+                    document.getElementById('amount').value = t.amount;
+                    document.getElementById('description').value = t.description || '';
+                }
+            } else {
+                title.textContent = 'নতুন লেনদেন যোগ করুন';
+                form.reset();
+                document.getElementById('editId').value = '';
+                document.getElementById('date').valueAsDate = new Date();
+                document.getElementById('category').innerHTML = '<option value="">প্রথমে ধরন নির্বাচন করুন</option>';
+            }
+            
+            modal.classList.add('active');
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jGNujbCxqCO7or7KiZV4m6YDGKH.jpg" alt="Movie 14">
-
-        <p>The Witcher</p>
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6BCH5qUK0tbhmnvJxnlyse3aD14.jpg" alt="Movie 15">
-
-        <p>TRON: Ares</p>
+        function saveTransaction(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('editId').value;
+            const data = {
+                id: id ? parseInt(id) : Date.now(),
+                date: document.getElementById('date').value,
+                type: document.getElementById('type').value,
+                category: document.getElementById('category').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                description: document.getElementById('description').value
+            };
+            
+            if (id) {
+                const index = transactions.findIndex(t => t.id === parseInt(id));
+                if (index !== -1) transactions[index] = data;
+                showToast('লেনদেন আপডেট হয়েছে!', 'success');
+            } else {
+                transactions.push(data);
+                showToast('নতুন লেনদেন যোগ হয়েছে!', 'success');
+            }
+            
+            saveToStorage();
+            closeModal();
+            renderAll();
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/4MC1qxXJeV6vOcqSFh6GdeFZjtc.jpg" alt="Movie 16">
-
-        <p>Predator: Badlands</p>
+        function deleteTransaction(id) {
+            if (confirm('আপনি কি নিশ্চিত যে এই লেনদেনটি মুছে ফেলতে চান?')) {
+                transactions = transactions.filter(t => t.id !== id);
+                saveToStorage();
+                renderAll();
+                showToast('লেনদেন মুছে ফেলা হয়েছে!', 'info');
+            }
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/e8UXuYbVqjdeESIQ688hQP98Fzh.jpg" alt="Movie 17">
-
-        <p>Black Phone 2</p>
+        function saveToStorage() {
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_face/hr9rjR3J0xBBKmlJ4n3gHId9ccx.jpg" alt="Movie 18">
-
-        <p>Animal</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-  </section>
-
-  <!-- Movie Grid  (19 - 24) -->
-  <section class="movies">
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/hqRb1wyIVsaMukZElPBUXoJPqrR.jpg" alt="Movie 19">
-
-        <p>Attack on Titan</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/z85wVUR32PrvHfope9Xbn0kD68u.jpg" alt="Movie 20">
-
-        <p>Death Note</p>
+        function getFilteredTransactions() {
+            const from = document.getElementById('filterFrom').value;
+            const to = document.getElementById('filterTo').value;
+            const type = document.getElementById('filterType').value;
+            const category = document.getElementById('filterCategory').value;
+            
+            return transactions.filter(t => {
+                if (from && t.date < from) return false;
+                if (to && t.date > to) return false;
+                if (type && t.type !== type) return false;
+                if (category && t.category !== category) return false;
+                return true;
+            }).sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
         
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/oQk3aXYEa4TMd9rAYgzDpAYTU8P.jpg" alt="Movie 21">
-
-        <p>My Status as an Assassin Obviously Exceeds the Hero's</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/6WUSl1NP5I66IGiI6n9BwOzZTbY.jpg" alt="Movie 22">
-
-        <p>May I Ask for One Final Thing?</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/jCMbKOH4iootEBXNa5e4jKoeTSU.jpg" alt="Movie 23">
-
-        <p>Rurouni Kenshin</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-    <div class="movie">
-      <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8CmeBJNUzOFk29diWfJf8de332i.jpg" alt="Movie 24">
-
-        <p>One-Punch Man Season-03</p>
-
-        <button> Download </button>
-      </a>
-    </div>
-
-  </section>
-
-  
-  <!-- Mobile Advertisement { মোবাইল বিজ্ঞাপন } -->
-
-  <div class="mobile" >
-    <a href="https://stopperscared.com/k1ws7rhwd?key=d63a80f65ae22b84f79e89432ec4b07d">
-      <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/db/66/70/db667096-732b-8c5b-485a-f4986a0f2319/new_wutu2732-3.jpg/643x0w.jpg" alt="Add">
-
-      <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/c2/07/e2/c207e20a-61ea-6d10-d19e-50052137ed39/cf31adc3-4a9c-472a-81c9-fbdd7aafd522_6.png/643x0w.jpg" alt="Add">
-    </a>
-  </div>
-
+        function renderAll() {
+            const filtered = getFilteredTransactions();
+            renderTable(filtered);
+            renderKPIs(filtered);
+            renderCharts(filtered);
+        }
+        
+        function renderTable(data) {
+            const tbody = document.getElementById('transactionTable');
+            const container = document.getElementById('tableContainer');
+            
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>কোনো লেনদেন পাওয়া যায়নি</h3>
+                        <p>নতুন লেনদেন যোগ করতে উপরের বাটনে ক্লিক করুন</p>
+                    </div>
+                `;
+                document.getElementById('recordCount').textContent = '০টি রেকর্ড';
+                return;
+            }
+            
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>তারিখ</th>
+                            <th>খাত</th>
+                            <th>বিবরণ</th>
+                            <th>ধরন</th>
+                            <th>পরিমাণ</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionTable"></tbody>
+                </table>
+            `;
+            
+            const newTbody = document.getElementById('transactionTable');
+            newTbody.innerHTML = data.map(t => `
+                <tr>
+                    <td>${formatDate(t.date)}</td>
+                    <td><span class="category-tag">${t.category}</span></td>
+                    <td>${t.description || '-'}</td>
+                    <td><span class="type-badge type-${t.type}">${t.type === 'income' ? 'আয়' : 'ব্যয়'}</span></td>
+                    <td class="amount-${t.type}">৳${formatNumber(t.amount)}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn edit-btn" onclick="openModal(${t.id})" title="সম্পাদনা">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteTransaction(${t.id})" title="মুছুন">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            document.getElementById('recordCount').textContent = `${data.length}টি রেকর্ড`;
+        }
+        
+        function renderKPIs(data) {
+            const allData = transactions; // Use all data for KPIs, not filtered
+            
+            const totalIncome = allData.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const totalExpense = allData.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            const balance = totalIncome - totalExpense;
+            const savingsRate = totalIncome > 0 ? ((totalIncome - totalExpense) / totalIncome * 100).toFixed(1) : 0;
+            
+            // Monthly stats
+            const now = new Date();
+            const currentMonth = now.toISOString().slice(0, 7);
+            const monthData = allData.filter(t => t.date.startsWith(currentMonth));
+            const monthIncome = monthData.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const monthExpense = monthData.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            
+            document.getElementById('totalIncome').textContent = `৳${formatNumber(totalIncome)}`;
+            document.getElementById('totalExpense').textContent = `৳${formatNumber(totalExpense)}`;
+            document.getElementById('balance').textContent = `৳${formatNumber(balance)}`;
+            document.getElementById('savingsRate').textContent = `${savingsRate}%`;
+            
+            document.getElementById('monthIncome').textContent = `৳${formatNumber(monthIncome)}`;
+            document.getElementById('monthExpense').textContent = `৳${formatNumber(monthExpense)}`;
+            document.getElementById('monthSavings').textContent = `৳${formatNumber(monthIncome - monthExpense)}`;
+            document.getElementById('totalTransactions').textContent = allData.length;
+            
+            // Balance status
+            const balanceStatus = document.getElementById('balanceStatus');
+            if (balance > 0) {
+                balanceStatus.innerHTML = '<i class="fas fa-check-circle"></i> সুস্থ অবস্থা';
+                balanceStatus.className = 'kpi-change positive';
+            } else if (balance < 0) {
+                balanceStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ঋণে রয়েছেন';
+                balanceStatus.className = 'kpi-change negative';
+            } else {
+                balanceStatus.innerHTML = '<i class="fas fa-minus-circle"></i> শূন্য ব্যালেন্স';
+                balanceStatus.className = 'kpi-change';
+            }
+            
+            // Savings status
+            const savingsStatus = document.getElementById('savingsStatus');
+            if (savingsRate >= 20) {
+                savingsStatus.innerHTML = '<i class="fas fa-thumbs-up"></i> চমৎকার সঞ্চয়';
+                savingsStatus.className = 'kpi-change positive';
+            } else if (savingsRate >= 10) {
+                savingsStatus.innerHTML = '<i class="fas fa-check"></i> ভালো সঞ্চয়';
+                savingsStatus.className = 'kpi-change positive';
+            } else if (savingsRate > 0) {
+                savingsStatus.innerHTML = '<i class="fas fa-info-circle"></i> আরও সঞ্চয় করুন';
+                savingsStatus.className = 'kpi-change';
+            } else {
+                savingsStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> সঞ্চয় নেই';
+                savingsStatus.className = 'kpi-change negative';
+            }
+        }
+        
+        function renderCharts(data) {
+            const allData = transactions;
+            
+            // Category Chart (Expenses only)
+            const expenseData = allData.filter(t => t.type === 'expense');
+            const categoryTotals = {};
+            expenseData.forEach(t => {
+                categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount;
+            });
+            
+            const catCtx = document.getElementById('categoryChart').getContext('2d');
+            if (categoryChart) categoryChart.destroy();
+            
+            if (Object.keys(categoryTotals).length > 0) {
+                categoryChart = new Chart(catCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(categoryTotals),
+                        datasets: [{
+                            data: Object.values(categoryTotals),
+                            backgroundColor: [
+                                '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981',
+                                '#06b6d4', '#3b82f6', '#6366f1', '#a855f7', '#ec4899'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = '৳' + formatNumber(context.raw);
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((context.raw / total) * 100).toFixed(1);
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                document.getElementById('categoryChart').style.display = 'none';
+            }
+            
+            // Monthly Chart
+            const monthlyData = {};
+            allData.forEach(t => {
+                const month = t.date.slice(0, 7);
+                if (!monthlyData[month]) monthlyData[month] = { income: 0, expense: 0 };
+                monthlyData[month][t.type] += t.amount;
+            });
+            
+            const sortedMonths = Object.keys(monthlyData).sort();
+            const monthLabels = sortedMonths.map(m => {
+                const [year, month] = m.split('-');
+                return `${getBanglaMonth(month)} ${year}`;
+            });
+            
+            const monthCtx = document.getElementById('monthlyChart').getContext('2d');
+            if (monthlyChart) monthlyChart.destroy();
+            
+            if (sortedMonths.length > 0) {
+                monthlyChart = new Chart(monthCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: monthLabels,
+                        datasets: [
+                            {
+                                label: 'আয়',
+                                data: sortedMonths.map(m => monthlyData[m].income),
+                                backgroundColor: '#10b981',
+                                borderRadius: 6,
+                            },
+                            {
+                                label: 'ব্যয়',
+                                data: sortedMonths.map(m => monthlyData[m].expense),
+                                backgroundColor: '#ef4444',
+                                borderRadius: 6,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '৳' + formatNumber(value);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        function applyFilters() {
+            renderAll();
+            showToast('ফিল্টার প্রয়োগ হয়েছে!', 'success');
+        }
+        
+        function resetFilters() {
+            document.getElementById('filterFrom').value = '';
+            document.getElementById('filterTo').value = '';
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterCategory').value = '';
+            renderAll();
+            showToast('ফিল্টার রিসেট হয়েছে!', 'info');
+        }
+        
+        function exportToCSV() {
+            const data = getFilteredTransactions();
+            if (data.length === 0) {
+                showToast('এক্সপোর্ট করার মতো কোনো ডেটা নেই!', 'error');
+                return;
+            }
+            
+            const headers = ['তারিখ', 'ধরন', 'খাত', 'পরিমাণ', 'বিবরণ'];
+            const rows = data.map(t => [
+                t.date,
+                t.type === 'income' ? 'আয়' : 'ব্যয়',
+                t.category,
+                t.amount,
+                t.description || ''
+            ]);
+            
+            const csvContent = [headers, ...rows]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\\n');
+            
+            const blob = new Blob(['\\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `আয়-ব্যয়-হিসাব-${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            
+            showToast('CSV ফাইল ডাউনলোড হয়েছে!', 'success');
+        }
+        
+        function importFromCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const lines = text.split('\\n').filter(line => line.trim());
+                
+                // Skip header
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',').map(c => c.replace(/"/g, '').trim());
+                    if (cols.length >= 4) {
+                        transactions.push({
+                            id: Date.now() + i,
+                            date: cols[0],
+                            type: cols[1] === 'আয়' ? 'income' : 'expense',
+                            category: cols[2],
+                            amount: parseFloat(cols[3]) || 0,
+                            description: cols[4] || ''
+                        });
+                    }
+                }
+                
+                saveToStorage();
+                renderAll();
+                showToast('CSV ফাইল আমদানি হয়েছে!', 'success');
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+        
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-times-circle',
+                info: 'fa-info-circle'
+            };
+            
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('bn-BD', options);
+        }
+        
+        function formatNumber(num) {
+            return num.toLocaleString('bn-BD', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        
+        function getBanglaMonth(monthNum) {
+            const months = {
+                '01': 'জানুয়ারি', '02': 'ফেব্রুয়ারি', '03': 'মার্চ', '04': 'এপ্রিল',
+                '05': 'মে', '06': 'জুন', '07': 'জুলাই', '08': 'আগস্ট',
+                '09': 'সেপ্টেম্বর', '10': 'অক্টোবর', '11': 'নভেম্বর', '12': 'ডিসেম্বর'
+            };
+            return months[monthNum] || monthNum;
+        }
+        
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                openModal();
+            }
+        });
+    </script>
 </body>
+</html>'''
 
-</html>
+# Save the file
+output_path = '/mnt/agents/output/ay_bay_tracker.html'
+with open(output_path, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print(f"File saved successfully to: {output_path}")
+print(f"File size: {len(html_content)} characters")
