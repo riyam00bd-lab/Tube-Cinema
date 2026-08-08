@@ -1,386 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NetWorthHub – Finance & Wealth Insights</title>
 
-  <title>WealthScope — Celebrity Net Worth & Finance</title>
-  <meta name="description" content="Explore estimated net worth, career earnings, business ventures and financial profiles of notable people.">
-  <meta name="robots" content="index, follow">
+    <!-- ===== GOOGLE ADSENSE VERIFICATION CODE ===== -->
+    <!-- Paste your AdSense verification code inside the content attribute below -->
+    <meta name="google-adsense-verification" content="YOUR_ADSENSE_VERIFICATION_CODE_HERE" />
+    <!-- ============================================= -->
 
-  <!-- =========================================================
-       GOOGLE ADSENSE VERIFICATION
-       Replace the placeholder below with the exact meta tag
-       supplied by your Google AdSense account.
+    <!-- SEO Meta -->
+    <meta name="description" content="Net worth analysis, finance articles, and wealth insights on Entertainment, Business, and Sports personalities.">
+    <link rel="canonical" href="https://yourwebsite.com/">
 
-       Example:
-       <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX">
-       ========================================================= -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 
-  <!-- Optional: AdSense script can be added here after approval.
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-    crossorigin="anonymous"></script>
-  -->
+    <!-- Font Awesome (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <style>
-    :root{
-      --bg:#f6f8fb;
-      --surface:#ffffff;
-      --text:#111827;
-      --muted:#667085;
-      --line:#e7ebf2;
-      --brand:#176b5b;
-      --brand-dark:#0e5145;
-      --accent:#d9f5ed;
-      --gold:#d7a63a;
-      --shadow:0 12px 35px rgba(16,24,40,.08);
-      --radius:20px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      color:var(--text);
-      background:var(--bg);
-      line-height:1.65;
-    }
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
-    .container{width:min(1160px,92%);margin:auto}
-    .topbar{background:#0d2f29;color:#dff8f0;font-size:13px;padding:8px 0}
-    .topbar .container{display:flex;justify-content:space-between;gap:20px}
-    header{
-      position:sticky;top:0;z-index:20;
-      background:rgba(255,255,255,.94);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
-    }
-    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .logo{font-size:24px;font-weight:850;letter-spacing:-.7px}
-    .logo span{color:var(--brand)}
-    nav{display:flex;gap:26px;align-items:center}
-    nav a{font-weight:650;font-size:14px;color:#344054}
-    nav a:hover{color:var(--brand)}
-    .nav-cta{background:var(--brand);color:#fff!important;padding:11px 16px;border-radius:12px}
-    .hero{
-      padding:72px 0 55px;
-      background:
-        radial-gradient(circle at 90% 10%,rgba(23,107,91,.12),transparent 28%),
-        radial-gradient(circle at 10% 20%,rgba(215,166,58,.10),transparent 25%),
-        var(--surface);
-    }
-    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;background:var(--accent);color:var(--brand-dark);padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
-    h1{font-size:clamp(42px,6vw,68px);line-height:1.02;letter-spacing:-2.8px;margin:18px 0}
-    .hero p{font-size:18px;color:var(--muted);max-width:650px}
-    .search{margin-top:28px;display:flex;background:#fff;border:1px solid var(--line);padding:7px;border-radius:15px;box-shadow:var(--shadow);max-width:620px}
-    .search input{border:0;outline:0;flex:1;padding:12px 14px;font-size:15px}
-    .search button{border:0;background:var(--brand);color:#fff;padding:0 20px;border-radius:10px;font-weight:750;cursor:pointer}
-    .hero-card{background:#0d2f29;color:#fff;border-radius:28px;padding:28px;box-shadow:var(--shadow)}
-    .hero-card .small{color:#9ed6c8;font-size:13px}
-    .wealth-number{font-size:40px;font-weight:850;margin:6px 0}
-    .mini-bars{display:flex;gap:7px;height:90px;align-items:end;margin-top:25px}
-    .mini-bars span{flex:1;background:#4a9c8b;border-radius:7px 7px 2px 2px}
-    .mini-bars span:nth-child(1){height:30%}.mini-bars span:nth-child(2){height:48%}
-    .mini-bars span:nth-child(3){height:42%}.mini-bars span:nth-child(4){height:72%}
-    .mini-bars span:nth-child(5){height:62%}.mini-bars span:nth-child(6){height:92%}
-    section{padding:70px 0}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:25px}
-    .section-head h2{font-size:32px;letter-spacing:-1px;margin:0}
-    .section-head p{color:var(--muted);margin:6px 0 0}
-    .link{color:var(--brand);font-weight:750}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-    .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 6px 20px rgba(16,24,40,.04)}
-    .avatar{height:170px;background:linear-gradient(135deg,#dff4ee,#edf1f6);display:grid;place-items:center;font-size:56px}
-    .card-body{padding:22px}
-    .tag{display:inline-block;color:var(--brand);background:var(--accent);padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;text-transform:uppercase}
-    .card h3{font-size:21px;margin:12px 0 7px;line-height:1.25}
-    .card p{color:var(--muted);font-size:14px;margin:0 0 16px}
-    .meta{display:flex;justify-content:space-between;gap:10px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
-    .ad-slot{
-      min-height:120px;border:1px dashed #cfd6df;background:#fbfcfd;
-      border-radius:16px;display:grid;place-items:center;color:#98a2b3;
-      font-size:12px;margin:20px 0;
-    }
-    .featured{display:grid;grid-template-columns:1.1fr .9fr;gap:25px}
-    .featured-main{background:#0d2f29;color:#fff;border-radius:24px;padding:34px}
-    .featured-main h2{font-size:34px;line-height:1.15;margin:12px 0}
-    .featured-main p{color:#b8d8d1}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px}
-    .stat{background:rgba(255,255,255,.07);padding:16px;border-radius:14px}
-    .stat b{display:block;font-size:22px}.stat span{font-size:11px;color:#a8cbc3}
-    .side-list{display:grid;gap:12px}
-    .side-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;justify-content:space-between;gap:15px}
-    .side-item strong{display:block}.side-item span{font-size:12px;color:var(--muted)}
-    .about{background:#fff}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:start}
-    .checklist{display:grid;gap:13px;margin-top:20px}
-    .check{padding:15px 17px;border:1px solid var(--line);border-radius:14px;background:#fbfcfd}
-    footer{background:#0b2622;color:#cfe3de;padding:50px 0 25px}
-    .footer-grid{display:grid;grid-template-columns:1.4fr .8fr .8fr .8fr;gap:35px}
-    footer h3,footer h4{color:#fff;margin-top:0}
-    footer a{display:block;margin:9px 0;color:#b5cbc5;font-size:14px}
-    .copyright{border-top:1px solid rgba(255,255,255,.12);margin-top:35px;padding-top:18px;font-size:12px;color:#8fa9a2}
-    .notice{font-size:12px;color:var(--muted);background:#f0f4f6;border-left:4px solid var(--brand);padding:13px 15px;border-radius:8px}
-    @media(max-width:900px){
-      .hero-grid,.featured,.about-grid{grid-template-columns:1fr}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .footer-grid{grid-template-columns:repeat(2,1fr)}
-      nav{display:none}
-    }
-    @media(max-width:600px){
-      .topbar .container{display:block;text-align:center}
-      .nav{height:68px}.logo{font-size:21px}
-      .hero{padding:48px 0 35px}
-      h1{letter-spacing:-1.8px}
-      .grid{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr}
-      .footer-grid{grid-template-columns:1fr}
-      section{padding:50px 0}
-    }
-  </style>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0b1a33;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #0b1a33;
+            color: #fff;
+            padding: 18px 0;
+            border-bottom: 4px solid #fbbf24;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo h1 span {
+            color: #fbbf24;
+        }
+        .logo p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+        }
+        nav ul li a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: 0.2s;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #fbbf24;
+            border-bottom-color: #fbbf24;
+        }
+
+        /* Dropdown for Category */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #0b1a33;
+            min-width: 180px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 10px 0;
+            top: 30px;
+            left: 0;
+            border: 1px solid #1e3a5f;
+        }
+        .dropdown-content li {
+            list-style: none;
+        }
+        .dropdown-content li a {
+            display: block;
+            padding: 8px 20px;
+            color: #e2e8f0;
+            font-weight: 400;
+            border-bottom: none;
+        }
+        .dropdown-content li a:hover {
+            background: #1e3a5f;
+            color: #fbbf24;
+            border-radius: 0;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0b1a33 0%, #1e3a5f 100%);
+            color: #fff;
+            padding: 60px 0 50px;
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 40px;
+        }
+        .hero h2 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .hero h2 span {
+            color: #fbbf24;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin-top: 12px;
+        }
+
+        /* ===== ADSENSE PLACEMENT ===== */
+        .ad-banner {
+            background: #e9edf2;
+            border-radius: 16px;
+            padding: 18px 24px;
+            text-align: center;
+            margin: 30px 0 40px;
+            border: 1px dashed #94a3b8;
+            color: #475569;
+            font-size: 14px;
+        }
+        .ad-banner i {
+            margin-right: 8px;
+            color: #fbbf24;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title i {
+            color: #fbbf24;
+            font-size: 28px;
+        }
+
+        /* ===== ARTICLES GRID ===== */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .article-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid #eef2f6;
+        }
+        .article-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .article-img {
+            height: 190px;
+            background: #d9e2ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #1e3a5f;
+        }
+        .article-content {
+            padding: 24px 24px 28px;
+        }
+        .article-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fbbf24;
+            background: #fef9e7;
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-bottom: 12px;
+        }
+        .article-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .article-content h3 a {
+            color: #0b1a33;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .article-content h3 a:hover {
+            color: #fbbf24;
+        }
+        .article-content p {
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #64748b;
+            border-top: 1px solid #e9edf2;
+            padding-top: 16px;
+        }
+        .article-meta i {
+            margin-right: 6px;
+        }
+        .category-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 20px;
+            background: #0b1a33;
+            color: #fff;
+        }
+
+        /* ===== FINANCE TIP ===== */
+        .finance-tip {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 28px 30px;
+            margin-bottom: 40px;
+            border-left: 6px solid #fbbf24;
+        }
+        .finance-tip h4 {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .finance-tip p {
+            color: #1e293b;
+            margin-top: 8px;
+        }
+
+        /* ===== CONTACT SECTION (sample) ===== */
+        .contact-preview {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid #eef2f6;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contact-preview h3 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .contact-preview p {
+            color: #475569;
+        }
+        .contact-preview .btn {
+            background: #0b1a33;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .contact-preview .btn:hover {
+            background: #fbbf24;
+            color: #0b1a33;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0b1a33;
+            color: #cbd5e1;
+            padding: 40px 0 30px;
+            border-radius: 40px 40px 0 0;
+            margin-top: 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .footer-grid h4 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .footer-grid ul {
+            list-style: none;
+        }
+        .footer-grid ul li {
+            margin-bottom: 8px;
+        }
+        .footer-grid ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer-grid ul li a:hover {
+            color: #fbbf24;
+        }
+        .footer-bottom {
+            border-top: 1px solid #1e3a5f;
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-flex {
+                flex-direction: column;
+                align-items: start;
+                gap: 14px;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            .hero h2 {
+                font-size: 30px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                padding: 6px 0 6px 16px;
+                background: transparent;
+                border: none;
+            }
+            .dropdown-content li a {
+                padding: 4px 0;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-preview {
+                flex-direction: column;
+                gap: 16px;
+                align-items: start;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="topbar">
-    <div class="container">
-      <span>Independent finance & wealth research</span>
-      <span>Estimates are for informational purposes</span>
-    </div>
-  </div>
 
-  <header>
-    <div class="container nav">
-      <a class="logo" href="#">Wealth<span>Scope</span></a>
-      <nav>
-        <a href="#latest">Latest</a>
-        <a href="#categories">Categories</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a class="nav-cta" href="#newsletter">Newsletter</a>
-      </nav>
-    </div>
-  </header>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <h1>💰 Net<span>Worth</span>Hub</h1>
+                <p>Wealth &amp; Finance Insights</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <!-- Category Dropdown -->
+                    <li class="dropdown">
+                        <a href="#">Category <i class="fas fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></a>
+                        <ul class="dropdown-content">
+                            <li><a href="#"><i class="fas fa-film"></i> Entertainment</a></li>
+                            <li><a href="#"><i class="fas fa-briefcase"></i> Business</a></li>
+                            <li><a href="#"><i class="fas fa-futbol"></i> Sports</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <main>
+    <!-- ===== HERO ===== -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <span class="eyebrow">Finance • Wealth • Research</span>
-          <h1>Understand the wealth behind the names.</h1>
-          <p>Explore carefully researched profiles covering estimated net worth, career earnings, businesses, investments and major sources of income.</p>
-
-          <div class="search">
-            <input id="searchInput" type="search" placeholder="Search a person, business or topic...">
-            <button onclick="searchArticles()">Search</button>
-          </div>
+        <div class="container">
+            <h2>Top <span>Net Worth</span> Analysis<br>of World's Icons</h2>
+            <p>In-depth articles on the wealth of Entertainment, Business, and Sports personalities. Updated regularly.</p>
         </div>
-
-        <div class="hero-card">
-          <div class="small">Featured profile</div>
-          <h3 style="font-size:24px;margin:8px 0">Example Wealth Profile</h3>
-          <div class="wealth-number">$120M*</div>
-          <div class="small">Estimated net worth</div>
-          <div class="mini-bars">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <p class="small" style="margin-bottom:0">*Demo figure. Replace with verified, properly sourced data before publishing.</p>
-        </div>
-      </div>
     </section>
 
+    <!-- ===== ADSENSE BANNER ===== -->
     <div class="container">
-      <div class="ad-slot">
-        <!-- AdSense ad unit goes here after approval -->
-        Ad space — 728×90 / responsive
-      </div>
+        <div class="ad-banner">
+            <i class="fas fa-ad"></i> 
+            <strong>AdSense Ad Unit</strong> — Paste your AdSense unit code here.
+            <span style="display:block; margin-top:6px; font-size:12px; color:#64748b;">
+                (Verification meta tag is already placed in the &lt;head&gt;)
+            </span>
+        </div>
     </div>
 
-    <section id="latest">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Latest wealth stories</h2>
-            <p>Profiles designed for readers who want the numbers and the story behind them.</p>
-          </div>
-          <a class="link" href="#">View all →</a>
-        </div>
-
-        <div class="grid" id="articleGrid">
-          <article class="card" data-search="elon musk technology entrepreneur net worth">
-            <div class="avatar">🚀</div>
-            <div class="card-body">
-              <span class="tag">Technology</span>
-              <h3>Elon Musk Net Worth: Career, Companies & Wealth</h3>
-              <p>A sample article layout for explaining estimated wealth and the major assets behind it.</p>
-              <div class="meta"><span>8 min read</span><span>Updated recently</span></div>
-            </div>
-          </article>
-
-          <article class="card" data-search="taylor swift singer music net worth">
-            <div class="avatar">🎤</div>
-            <div class="card-body">
-              <span class="tag">Entertainment</span>
-              <h3>Taylor Swift Net Worth: Music, Tours & Businesses</h3>
-              <p>Show readers how earnings, touring, catalog value and businesses can contribute to wealth.</p>
-              <div class="meta"><span>7 min read</span><span>Profile</span></div>
-            </div>
-          </article>
-
-          <article class="card" data-search="warren buffett investor business net worth">
-            <div class="avatar">📈</div>
-            <div class="card-body">
-              <span class="tag">Investing</span>
-              <h3>Warren Buffett Net Worth: Investing & Berkshire</h3>
-              <p>A clean template for investment-focused profiles and long-form financial explainers.</p>
-              <div class="meta"><span>9 min read</span><span>Investing</span></div>
-            </div>
-          </article>
-
-          <article class="card" data-search="football athlete sports net worth">
-            <div class="avatar">⚽</div>
-            <div class="card-body">
-              <span class="tag">Sports</span>
-              <h3>Top Athlete Net Worth Profiles</h3>
-              <p>Compare salary, endorsements, businesses and other reported income sources.</p>
-              <div class="meta"><span>6 min read</span><span>Sports</span></div>
-            </div>
-          </article>
-
-          <article class="card" data-search="ceo founder business net worth">
-            <div class="avatar">💼</div>
-            <div class="card-body">
-              <span class="tag">Business</span>
-              <h3>CEO & Founder Wealth Profiles</h3>
-              <p>Explain ownership, equity, company value and reported compensation in reader-friendly language.</p>
-              <div class="meta"><span>10 min read</span><span>Business</span></div>
-            </div>
-          </article>
-
-          <article class="card" data-search="actor actress celebrity net worth">
-            <div class="avatar">🎬</div>
-            <div class="card-body">
-              <span class="tag">Celebrity</span>
-              <h3>Celebrity Net Worth: What the Estimates Mean</h3>
-              <p>A useful guide explaining why celebrity net worth figures are estimates rather than exact balances.</p>
-              <div class="meta"><span>5 min read</span><span>Guide</span></div>
-            </div>
-          </article>
-        </div>
-
-        <div class="ad-slot">
-          <!-- AdSense ad unit goes here after approval -->
-          Responsive ad space
-        </div>
-      </div>
-    </section>
-
-    <section id="categories">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Explore by category</h2>
-            <p>Build topical authority with useful, original finance content.</p>
-          </div>
-        </div>
-
-        <div class="featured">
-          <div class="featured-main">
-            <span class="tag">Editor's pick</span>
-            <h2>How is net worth actually calculated?</h2>
-            <p>Teach readers the difference between assets, liabilities, income and estimated wealth. This type of educational content can complement individual net-worth profiles.</p>
-            <a class="nav-cta" style="display:inline-block;margin-top:12px" href="#">Read guide →</a>
-            <div class="stats">
-              <div class="stat"><b>Assets</b><span>What someone owns</span></div>
-              <div class="stat"><b>Debt</b><span>What someone owes</span></div>
-              <div class="stat"><b>Net Worth</b><span>Assets minus liabilities</span></div>
-            </div>
-          </div>
-
-          <div class="side-list">
-            <div class="side-item"><div><strong>Entertainment</strong><span>Actors, singers & creators</span></div><b>→</b></div>
-            <div class="side-item"><div><strong>Business</strong><span>Founders, CEOs & companies</span></div><b>→</b></div>
-            <div class="side-item"><div><strong>Sports</strong><span>Athletes & endorsements</span></div><b>→</b></div>
-            <div class="side-item"><div><strong>Investing</strong><span>Investors & market education</span></div><b>→</b></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <div class="container about-grid">
-        <div>
-          <span class="eyebrow">Trust matters</span>
-          <h2 style="font-size:36px;line-height:1.15">A finance site built around transparency.</h2>
-          <p style="color:var(--muted)">Net worth is rarely an exact public number. WealthScope should clearly distinguish reported facts from estimates, explain methodology and link to credible sources where appropriate.</p>
-          <div class="notice">
-            <strong>Editorial note:</strong> Never present an estimate as a confirmed fact. Add a “Sources & methodology” section to every profile.
-          </div>
-        </div>
-
-        <div class="checklist">
-          <div class="check"><strong>✓ Original research</strong><br><span style="color:var(--muted);font-size:14px">Write useful, human-readable articles rather than copying other sites.</span></div>
-          <div class="check"><strong>✓ Sources & methodology</strong><br><span style="color:var(--muted);font-size:14px">Explain where reported figures come from and when they were updated.</span></div>
-          <div class="check"><strong>✓ Clear disclosures</strong><br><span style="color:var(--muted);font-size:14px">Use privacy, terms, contact and financial-information disclaimers.</span></div>
-          <div class="check"><strong>✓ Reader-first ads</strong><br><span style="color:var(--muted);font-size:14px">Keep ad placements visible but avoid misleading users or encouraging clicks.</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="newsletter">
-      <div class="container">
-        <div class="featured-main" style="display:flex;justify-content:space-between;gap:30px;align-items:center;flex-wrap:wrap">
-          <div>
-            <span class="tag">Newsletter</span>
-            <h2 style="margin-bottom:4px">Get new wealth profiles.</h2>
-            <p style="margin:0">Add your email service here when you're ready.</p>
-          </div>
-          <form onsubmit="event.preventDefault(); alert('Connect this form to your email service.');" style="display:flex;gap:8px;flex-wrap:wrap">
-            <input type="email" required placeholder="Your email" style="padding:13px 15px;border-radius:10px;border:0;min-width:230px">
-            <button class="nav-cta" style="border:0;cursor:pointer">Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" style="padding-top:0">
-      <div class="container">
-        <div class="ad-slot">
-          <!-- AdSense ad unit goes here after approval -->
-          Responsive ad space
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
+    <!-- ===== ARTICLES SECTION ===== -->
     <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h3>WealthScope</h3>
-          <p style="font-size:14px;color:#9fb8b1">Independent wealth and finance publishing focused on clear explanations and transparent estimates.</p>
-        </div>
-        <div><h4>Explore</h4><a href="#latest">Latest</a><a href="#categories">Categories</a><a href="#about">About</a></div>
-        <div><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a><a href="#">Disclaimer</a><a href="#">Cookie Policy</a></div>
-        <div><h4>Contact</h4><a href="mailto:hello@example.com">hello@example.com</a><a href="#">Contact Us</a></div>
-      </div>
-      <div class="copyright">© 2026 WealthScope. All rights reserved. Net worth figures are estimates unless explicitly stated otherwise.</div>
-    </div>
-  </footer>
 
-  <script>
-    function searchArticles(){
-      const q = document.getElementById('searchInput').value.toLowerCase().trim();
-      document.querySelectorAll('#articleGrid .card').forEach(card => {
-        card.style.display = !q || card.dataset.search.includes(q) ? '' : 'none';
-      });
-      document.getElementById('latest').scrollIntoView({behavior:'smooth'});
-    }
-    document.getElementById('searchInput').addEventListener('keydown', e => {
-      if(e.key === 'Enter') searchArticles();
-    });
-  </script>
+        <div class="section-title">
+            <i class="fas fa-newspaper"></i> 
+            <span>Latest Net Worth Articles</span>
+        </div>
+
+        <div class="articles-grid">
+            <!-- Card 1: Entertainment -->
+            <div class="article-card">
+                <div class="article-img" style="background:#fce4ec;">
+                    <i class="fas fa-film" style="font-size:60px; color:#b71c1c;"></i>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag"><i class="fas fa-star"></i> Entertainment</span>
+                    <h3><a href="#">Taylor Swift's Net Worth: Music Empire &amp; Business Moves</a></h3>
+                    <p>How the pop icon built a billion-dollar fortune through music, tours, and strategic investments.</p>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> Aug 7, 2026</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Business -->
+            <div class="article-card">
+                <div class="article-img" style="background:#d1fae5;">
+                    <i class="fas fa-briefcase" style="font-size:60px; color:#065f46;"></i>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag"><i class="fas fa-chart-line"></i> Business</span>
+                    <h3><a href="#">Elon Musk's Wealth: Tesla, SpaceX &amp; X Holdings</a></h3>
+                    <p>Deep dive into Elon Musk's net worth, his companies, and how he remains the world's richest.</p>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> Aug 6, 2026</span>
+                        <span><i class="far fa-clock"></i> 6 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Sports -->
+            <div class="article-card">
+                <div class="article-img" style="background:#dbeafe;">
+                    <i class="fas fa-futbol" style="font-size:60px; color:#1e3a8a;"></i>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag"><i class="fas fa-trophy"></i> Sports</span>
+                    <h3><a href="#">Cristiano Ronaldo's Net Worth: Endorsements &amp; Career</a></h3>
+                    <p>From Manchester United to Al-Nassr – how Ronaldo amassed his massive wealth on and off the pitch.</p>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> Aug 5, 2026</span>
+                        <span><i class="far fa-clock"></i> 4 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Entertainment -->
+            <div class="article-card">
+                <div class="article-img" style="background:#fef3c7;">
+                    <i class="fas fa-microphone" style="font-size:60px; color:#b45309;"></i>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag"><i class="fas fa-music"></i> Entertainment</span>
+                    <h3><a href="#">Jay-Z's Billion-Dollar Portfolio: Music, Art &amp; Investments</a></h3>
+                    <p>How the rapper-turned-mogul built a net worth exceeding $2.5 billion across multiple industries.</p>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> Aug 4, 2026</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Business -->
+            <div class="article-card">
+                <div class="article-img" style="background:#e0e7ff;">
+                    <i class="fas fa-store" style="font-size:60px; color:#1e3a8a;"></i>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag"><i class="fas fa-shopping-cart"></i> Business</span>
+                    <h3><a href="#">Jeff Bezos: From Amazon to Blue Origin – Net Worth 2026</a></h3>
+                    <p>Tracking Bezos' fortune, his space ventures, and how he manages his wealth post-Amazon.</p>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> Aug 3, 2026</span>
+                        <span><i class="far fa-clock"></i> 7 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Sports -->
+            <div class="article-card">
+                <div class="article-img" style="background:#f3e8ff;">
+                    <i class="fas fa-basketball-ball" style="font-size:60px; color:#6b21a8;"></i>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag"><i class="fas fa-medal"></i> Sports</span>
+                    <h3><a href="#">LeBron James: NBA Salary, Endorsements &amp; Business Empire</a></h3>
+                    <p>The King's net worth, his media ventures, and how he became a billionaire athlete.</p>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar-alt"></i> Aug 2, 2026</span>
+                        <span><i class="far fa-clock"></i> 4 min read</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FINANCE TIP ===== -->
+        <div class="finance-tip">
+            <h4><i class="fas fa-lightbulb" style="color:#fbbf24;"></i> Finance Tip</h4>
+            <p><strong>Track your net worth:</strong> Just like these icons, regularly monitor your assets and liabilities. Use tools like Mint or Personal Capital to stay on top of your financial health.</p>
+        </div>
+
+        <!-- ===== CONTACT PREVIEW ===== -->
+        <div class="contact-preview">
+            <div>
+                <h3><i class="fas fa-envelope" style="color:#fbbf24;"></i> Get in Touch</h3>
+                <p>Have a suggestion or want to collaborate? Reach out to our team.</p>
+            </div>
+            <a href="#" class="btn">Contact Us <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+    </div> <!-- /container -->
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>💰 NetWorthHub</h4>
+                    <p style="color:#94a3b8; max-width:260px;">Your trusted source for net worth analysis, finance articles, and wealth insights from Entertainment, Business, and Sports.</p>
+                </div>
+                <div>
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-film"></i> Entertainment</a></li>
+                        <li><a href="#"><i class="fas fa-briefcase"></i> Business</a></li>
+                        <li><a href="#"><i class="fas fa-futbol"></i> Sports</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">AdSense Info</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 NetWorthHub — All rights reserved. 
+                <span style="display:inline-block; margin-left:12px;">
+                    <i class="fas fa-code"></i> AdSense verification meta tag is included in &lt;head&gt;.
+                </span>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
